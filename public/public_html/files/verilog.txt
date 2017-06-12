@@ -1,0 +1,112 @@
+module whatch (centsec, sec, min, hrs, clock, sw17, sw15, sw14)
+begin
+	output reg [6:0] centsec; //De 0 a 99
+	output reg [5:0] sec; //De 0 a 59
+	output reg [5:0] min; //De 0 a 59
+	output reg [4:0] hrs; //De 0 a 24
+	input clock;
+	input sw17;
+	input sw16;
+	input sw15;
+	input sw14;
+	
+	
+	reg [18:0] count;
+	reg 
+	reg[1:0] estado;
+	
+	initial count = 19'd0;
+	initial estado = 2'd0;
+	initial centsec = 7'd0;
+	initial sec = 6'd0;
+	initial min = 6'd0;
+	initial hrs = 5'd15;
+	
+	always @(posedge clock) 
+	begin
+		if(sw16 == 1 && sw15 == 1 && sw14 == 1)
+		begin
+			estado = 2'd0; //Modo relógio
+		end
+		
+		else if(sw16 == 0 && sw15 == 1 && sw14 == 1)
+		begin
+			estado = 2'd1; //Para o relógio modo configuração de hora
+		end
+		
+		else if(sw16 == 1 && sw15 == 0 && sw14 == 1)
+		begin
+			estado = 2'd2; //Para o relógio modo configuração de minuto
+		end
+		
+		else if(sw16 == 1 && sw15 == 1 && sw14 == 0)
+		begin
+			estado = 2'd3; //Para o relógio modo configuração de segundo
+		end
+		
+		else
+		begin
+			estado = 2'd0;
+		end
+		
+		case(estado)
+			0:
+			begin
+				if(count < 19'd500000)
+				begin
+					count = count + 19'd1;
+				end
+				else
+				begin
+					count = 19'd0;
+					centsec = centsec + 7'd1;
+					if(centsec > 7'd99)
+					begin
+						centsec = 7'd0;
+						sec = sec + 6'd1;
+						if(sec > 6'd59)
+						begin
+							sec = 6'd0;
+							min = min + 6'd1;
+							if(min > 6'd59)
+							begin
+								min = 6'd0;
+								hrs = hrs + 5'd1;
+								if(hrs > 5'd23)
+								begin
+									hrs = 5'd0;
+								end
+							end
+						end
+					end
+				end
+			end
+			
+			1:
+			begin
+				
+			end
+			
+			2:
+			begin
+			
+			end
+			
+			3:
+			begin
+			
+			end
+			
+		end
+	end
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
