@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   
 <head>
 	<meta charset="UTF-8">
  	<title>Sávio Berdine</title>
-	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<link rel="stylesheet" href="{% static 'css/estilo.css' %}">
 	<prato>
-		<p align="center"><img class="savioImg" src="assets/img/savio.png"></p>
+		<p align="center"><img class="savioImg" src="{% static 'img/savio.png' %}"></p>
 		<h1 class="nome">Sávio Berdine</h1>
 	</prato>
 
@@ -17,9 +18,9 @@
   
 	<nav id="menu">
     <ul class="menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="files.html">Files</a></li>
-        <li><a href="social.html">Social</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/files">Files</a></li>
+        <li><a href="/social">Social</a></li>
     </ul>
 	</nav>
 
